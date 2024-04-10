@@ -1,23 +1,5 @@
 "use strict";
-
-const StatusCode = {
-  OK: 200,
-  CREATED: 201,
-  BAD_REQUEST: 400,
-  UNAUTHORIZED: 401,
-  FORBIDDEN: 403,
-  NOT_FOUND: 404,
-  CONFLICT: 409,
-  INTERNAL_SERVER_ERROR: 500,
-};
-
-const ReasonStatusCode = {
-  FORBIDDEN: "Forbidden error",
-  NOT_FOUND: "Not found",
-  CONFLICT: "Conflict error",
-  INTERNAL_SERVER_ERROR: "Internal server error",
-  BAD_REQUEST: "Bad request",
-};
+const { StatusCodes, ReasonPhrases } = require("./httpStatusCode");
 
 class ErrorResponse extends Error {
   constructor(message, status) {
@@ -28,8 +10,8 @@ class ErrorResponse extends Error {
 
 class ConflictRequestError extends ErrorResponse {
   constructor(
-    message = ReasonStatusCode.CONFLICT,
-    statusCode = StatusCode.CONFLICT
+    message = ReasonPhrases.CONFLICT,
+    statusCode = StatusCodes.CONFLICT
   ) {
     super(message, statusCode);
   }
@@ -37,8 +19,26 @@ class ConflictRequestError extends ErrorResponse {
 
 class BadRequestError extends ErrorResponse {
   constructor(
-    message = ReasonStatusCode.BAD_REQUEST,
-    statusCode = StatusCode.BAD_REQUEST
+    message = ReasonPhrases.BAD_REQUEST,
+    statusCode = StatusCodes.BAD_REQUEST
+  ) {
+    super(message, statusCode);
+  }
+}
+
+class AuthFailureError extends ErrorResponse {
+  constructor(
+    message = ReasonPhrases.UNAUTHORIZED,
+    statusCode = StatusCodes.UNAUTHORIZED
+  ) {
+    super(message, statusCode);
+  }
+}
+
+class NotFoundError extends ErrorResponse {
+  constructor(
+    message = ReasonPhrases.NOT_FOUND,
+    statusCode = StatusCodes.NOT_FOUND
   ) {
     super(message, statusCode);
   }
@@ -47,4 +47,6 @@ class BadRequestError extends ErrorResponse {
 module.exports = {
   ConflictRequestError,
   BadRequestError,
+  NotFoundError,
+  AuthFailureError,
 };
