@@ -10,35 +10,35 @@ const productSchema = new Schema(
   {
     product_name: {
       type: String,
-      require: true,
+      required: true,
     },
     product_thumb: {
       type: String,
-      require: true,
+      required: true,
     },
     product_description: String,
     product_slug: String,
     product_price: {
       type: Number,
-      require: true,
+      required: true,
     },
     product_quantity: {
       type: Number,
-      require: true,
+      required: true,
     },
     product_type: {
       type: String,
-      require: true,
+      required: true,
       enum: ["Electronics", "Clothing", "Furniture", "Others"],
     },
     product_shop: {
       type: Schema.Types.ObjectId,
       ref: "Shop",
-      require: true,
+      required: true,
     },
     product_attributes: {
       type: Schema.Types.Mixed,
-      require: true,
+      required: true,
     },
     // more
     product_ratingAverage: {
@@ -83,14 +83,14 @@ const clothingSchema = new Schema(
   {
     brand: {
       type: String,
-      require: true,
+      required: true,
     },
     size: String,
     material: String,
     product_shop: {
       type: Schema.Types.ObjectId,
       ref: "Shop",
-      require: true,
+      required: true,
     },
   },
   {
@@ -104,14 +104,14 @@ const electronicSchema = new Schema(
   {
     manufacturer: {
       type: String,
-      require: true,
+      required: true,
     },
     model: String,
     color: String,
     product_shop: {
       type: Schema.Types.ObjectId,
       ref: "Shop",
-      require: true,
+      required: true,
     },
   },
   {
@@ -125,14 +125,14 @@ const furnitureSchema = new Schema(
   {
     brand: {
       type: String,
-      require: true,
+      required: true,
     },
     size: String,
     material: String,
     product_shop: {
       type: Schema.Types.ObjectId,
       ref: "Shop",
-      require: true,
+      required: true,
     },
   },
   {
