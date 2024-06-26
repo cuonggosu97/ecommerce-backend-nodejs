@@ -35,6 +35,8 @@ app.use((req, res, next) => {
 // productTest.purchaseProduct("product:001", 10);
 // init db
 require("./dbs/init.mongodb");
+const initRedis = require("./dbs/init.redis");
+initRedis.initRedis();
 // const { checkOverLoad } = require("./helpers/check.connect");
 // checkOverLoad();
 // init routes
