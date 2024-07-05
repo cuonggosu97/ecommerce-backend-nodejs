@@ -47,8 +47,9 @@ const sendEmailToken = async ({ email = null }) => {
       throw new NotFoundError("Template not found");
     }
     // 3. replace placeholder with params
+    const link_verify = `http://localhost:3052/v1/api/user/welcome-back?token=${token.otp_token}`;
     const content = replacePlaceholder(template.tem_html, {
-      link_verify: `http://localhost:3000/verify-email?token=${token.otp_token}`,
+      link_verify,
     });
 
     // 4, send email
@@ -60,7 +61,7 @@ const sendEmailToken = async ({ email = null }) => {
       console.error(`Error send email: ${error}`);
     });
 
-    return 1;
+    return link_verify;
   } catch (error) {}
 };
 
