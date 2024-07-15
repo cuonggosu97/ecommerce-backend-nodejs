@@ -10,6 +10,8 @@ router.get(
   "/search/:keySearch",
   asyncHandler(productController.getListSearchProduct)
 );
+router.get("/sku/select_variation", productController.findOneSku);
+router.get("/spu/spu_info", productController.findOneSpu);
 router.get("", productController.findAllProducts);
 router.get("/:product_id", productController.findProduct);
 
@@ -17,6 +19,7 @@ router.get("/:product_id", productController.findProduct);
 router.use(authenticationV2);
 //
 router.post("", asyncHandler(productController.createProduct));
+router.post("/spu/new", asyncHandler(productController.createSpu));
 router.patch("/:productId", asyncHandler(productController.updateProduct));
 router.post(
   "/publish/:id",
