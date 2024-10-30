@@ -37,6 +37,12 @@ app.use((req, res, next) => {
 require("./dbs/init.mongodb");
 const initRedis = require("./dbs/init.redis");
 initRedis.initRedis();
+// ioRedis
+const ioredis = require("./dbs/init.ioredis");
+ioredis.init({
+  IOREDIS_IS_ENABLE: true,
+});
+
 // const { checkOverLoad } = require("./helpers/check.connect");
 // checkOverLoad();
 // init routes

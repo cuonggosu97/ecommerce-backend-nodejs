@@ -2,9 +2,9 @@
 
 const { randomProductId } = require("../utils");
 const SKU_MODEL = require("../models/sku.model");
-const SPU_MODEL = require("../models/spu.model");
 const _ = require("lodash");
-const { NotFound } = require("@aws-sdk/client-s3");
+const { CACHE_PRODUCT } = require("../configs/constant");
+const { setCacheIOExpiration } = require("../models/repositories/cache.repo");
 
 const newSku = async ({ spu_id, sku_list }) => {
   try {
@@ -25,12 +25,20 @@ const newSku = async ({ spu_id, sku_list }) => {
 
 const oneSku = async ({ sku_id, product_id }) => {
   try {
-    // read cache
+    if (sku_id < 0 || product_id < 0) return null;
+
+    const skuKeyCache = `${CACHE_PRODUCT.SKU}${sku_id}`; // key cache
+
     const sku = await SKU_MODEL.findOne({ sku_id, product_id }).lean();
-    if (sku) {
-      // set cache
-    }
-    return _.omit(sku, ["__v", "updatedAt", "createdAt", "isDeleted"]);
+    await setCacheIOExpiration({
+      key: skuKeyCache,
+      value: JSON.stringify(sku ?? null),
+      expirationInSeconds: 30,
+    });
+    return {
+      ...sku,
+      toLoad: "dbs",
+    };
   } catch (error) {
     return null;
   }
